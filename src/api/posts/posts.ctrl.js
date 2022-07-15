@@ -42,9 +42,26 @@ export const write = async (ctx) => {
 };
 
 export const list = async (ctx) => {
+  const page = parseInt(ctx.query.page || '1', 10); // page별로 지정, 예시)4000:api/posts?page=2
+  if (page < 1) {
+    ctx.status = 400;
+    return;
+  }
+
   try {
-    const posts = await Post.find().exec();
-    ctx.body = posts;
+    const posts = await Post.find()
+      .sort({ _id: -1 }) // 내림차순 정렬 sort(),
+      .limit(10) // 개수 제한 limit(갯수)
+      .skip((page - 1) * 10) //page 1일때 skip(0), page 2일때 skip(10): 데이터 10까지 생략하고 11부터 출력
+      .exec();
+    const postCount = await Post.countDocuments().exec();
+    ctx.set('Last-Page', Math.ceil(postCount / 10)); // 마지막 페이지 출력
+    ctx.body = posts
+      .map((post) => post.toJSON())
+      .map((post) => ({
+        ...post,
+        body: post.body.length < 200 ? post.body : `${post.body.slice(0, 200)}...`, // body 글자수 제한
+      }));
   } catch (e) {
     ctx.throw(500, e);
   }
