@@ -2,7 +2,7 @@ let postId = 1;
 
 const posts = [{ id: 1, title: 'title', body: 'content' }];
 
-exports.write = (ctx) => {
+export const write = (ctx) => {
   const { title, body } = ctx.request.body;
   postId += 1;
   const post = { id: postId, title, body };
@@ -10,11 +10,11 @@ exports.write = (ctx) => {
   ctx.body = post;
 };
 
-exports.list = (ctx) => {
+export const list = (ctx) => {
   ctx.body = posts;
 };
 
-exports.read = (ctx) => {
+export const read = (ctx) => {
   const { id } = ctx.params;
   const post = posts.find((value) => value.id.toString() === id);
   if (!post) {
@@ -27,7 +27,7 @@ exports.read = (ctx) => {
   ctx.body = post;
 };
 
-exports.remove = (ctx) => {
+export const remove = (ctx) => {
   const { id } = ctx.params;
   const index = posts.findIndex((value) => value.id.toString() === id);
   if (index === -1) {
@@ -41,7 +41,7 @@ exports.remove = (ctx) => {
   ctx.status = 204;
 };
 
-exports.replace = (ctx) => {
+export const replace = (ctx) => {
   const { id } = ctx.params;
   const index = posts.findIndex((value) => value.id.toString() === id);
   if (index === -1) {
@@ -59,7 +59,7 @@ exports.replace = (ctx) => {
   ctx.body = posts[index];
 };
 
-exports.update = (ctx) => {
+export const update = (ctx) => {
   const { id } = ctx.params;
   const index = posts.findIndex((value) => value.id.toString() === id);
   if (index === -1) {
