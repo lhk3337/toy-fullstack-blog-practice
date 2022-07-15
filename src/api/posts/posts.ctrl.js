@@ -1,5 +1,7 @@
 import Post from '../../models/post.js';
 import mongoose from 'mongoose';
+import Joi from '@hapi/joi';
+
 const { ObjectId } = mongoose.Types;
 
 export const checkObjectId = (ctx, next) => {
@@ -12,6 +14,18 @@ export const checkObjectId = (ctx, next) => {
 };
 
 export const write = async (ctx) => {
+  const schema = Joi.object().keys({
+    title: Joi.string(),
+    body: Joi.string(),
+    tags: Joi.array().items(Joi.string()),
+  });
+
+  try {
+    await schema.validateAsync(ctx.request.body);
+  } catch (e) {
+    ctx.throw(400, e);
+  }
+
   const { title, body, tags } = ctx.request.body;
   const post = new Post({
     title,
@@ -62,6 +76,18 @@ export const remove = async (ctx) => {
 
 export const update = async (ctx) => {
   const { id } = ctx.params;
+  const schema = Joi.object().keys({
+    title: Joi.string().required(),
+    body: Joi.string().required(),
+    tags: Joi.array().items(Joi.string()),
+  });
+
+  try {
+    await schema.validateAsync(ctx.request.body);
+  } catch (e) {
+    ctx.throw(400, e);
+  }
+
   try {
     const post = await Post.findByIdAndUpdate(id, ctx.request.body, {
       new: true,
