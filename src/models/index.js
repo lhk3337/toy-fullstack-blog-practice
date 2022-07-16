@@ -2,7 +2,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import mongoose from 'mongoose';
-import createFakeData from '../createFakeData.js';
 const { MONGO__IN_URI, MONGO_EX_URI } = process.env;
 
 const connect = () => {
@@ -11,7 +10,6 @@ const connect = () => {
       console.log('MongoDB error', error);
     } else {
       console.log('Connected MongoDB');
-      createFakeData();
     }
   });
 };
