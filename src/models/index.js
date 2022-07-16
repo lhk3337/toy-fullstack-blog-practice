@@ -3,10 +3,10 @@ dotenv.config();
 
 import mongoose from 'mongoose';
 import createFakeData from '../createFakeData.js';
-const { MONGO_URI } = process.env;
+const { MONGO__IN_URI, MONGO_EX_URI } = process.env;
 
 const connect = () => {
-  mongoose.connect(MONGO_URI, (error) => {
+  mongoose.connect(MONGO__IN_URI, (error) => {
     if (error) {
       console.log('MongoDB error', error);
     } else {
