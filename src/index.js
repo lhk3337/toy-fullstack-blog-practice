@@ -5,7 +5,7 @@ import Router from 'koa-router';
 import bodyParser from 'koa-bodyparser';
 import connect from './models/index.js';
 import api from './api/index.js';
-
+import jwtMiddleware from './lib/jwtMiddleware.js';
 const { PORT } = process.env;
 
 const app = new Koa();
@@ -13,7 +13,7 @@ const router = new Router();
 connect();
 router.use('/api', api.routes());
 app.use(bodyParser());
-
+app.use(jwtMiddleware);
 app.use(router.routes()).use(router.allowedMethods());
 
 const port = PORT || 4000;
