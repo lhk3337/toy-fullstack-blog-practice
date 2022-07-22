@@ -18,10 +18,17 @@
 ### frontend
 
 - src
-  - components
+  - components blog presentation (화면 표현)
     - auth : 로그인 페이지
     - common : Reuse Components
+  - containers : blog의 데이터 부분, redux관련
+    - auth : 로그인 페이지 데이터
+    - common : Reuse Components 데이터
   - lib
     - styles : CSS Color palette
   - pages : react router page
   - modules : redux
+
+## Sequence
+
+App -> Router -> Page -> Container -> components
