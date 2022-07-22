@@ -31,4 +31,12 @@
 
 ## Sequence
 
+### Front End
+
 App -> Router -> Page -> Container -> components
+
+## Data Flow
+
+### Front End
+
+API -> Redux Saga -> React Redux -> Container
