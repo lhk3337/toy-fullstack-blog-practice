@@ -4,6 +4,14 @@ import produce from "immer";
 const CHANGE_FIELD = "auth/CHANGE_FIELD";
 const INITIALIZE_FORM = "auth/INITIALIZE_FORM";
 
+const REG = "auth/REG";
+const REG_SUCCESS = "auth/REG_SUCCESS";
+const REG_FAILURE = "auth/REG_FAILURE";
+
+const LOGIN = "auth/LOGIN";
+const LOGIN_SUCCESS = "auth/LOGIN_SUCCESS";
+const LOGIN_FAILURE = "auth/LOGIN_FAILURE";
+
 export const changeFiled = createAction(CHANGE_FIELD, ({ form, key, value }) => ({
   form,
   key,
@@ -35,7 +43,7 @@ const auth = handleActions(
       produce inner function : 어떻게 업데이트 할지 정의하는 함수
       */
       produce(state, (draft) => {
-        draft[form][key] = value;
+        draft[form][key] = value; // state.form.key = value
       }),
     [INITIALIZE_FORM]: (state, { payload: form }) => ({ ...state, [form]: initialState[form] }),
   },
