@@ -1,16 +1,13 @@
 import { createAction, handleActions } from "redux-actions";
 import produce from "immer";
+import { createRequestActionTypes } from "lib/createRequestSaga";
 
 const CHANGE_FIELD = "auth/CHANGE_FIELD";
 const INITIALIZE_FORM = "auth/INITIALIZE_FORM";
 
-const REG = "auth/REG";
-const REG_SUCCESS = "auth/REG_SUCCESS";
-const REG_FAILURE = "auth/REG_FAILURE";
+const [REG, REG_SUCCESS, REG_FAILURE] = createRequestActionTypes("auth/REG");
 
-const LOGIN = "auth/LOGIN";
-const LOGIN_SUCCESS = "auth/LOGIN_SUCCESS";
-const LOGIN_FAILURE = "auth/LOGIN_FAILURE";
+const [LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE] = createRequestActionTypes("auth/LOGIN");
 
 export const changeFiled = createAction(CHANGE_FIELD, ({ form, key, value }) => ({
   form,
