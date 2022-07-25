@@ -52,7 +52,7 @@ const LoginForm = () => {
       return;
     }
     if (auth) {
-      console.log("회원가입 성공");
+      console.log("로그인 성공");
       console.log(auth);
       dispatch(check());
     }
