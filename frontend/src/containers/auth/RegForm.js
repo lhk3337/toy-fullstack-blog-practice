@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -7,6 +7,7 @@ import AuthForm from "components/auth/AuthForm";
 import { check } from "modules/user";
 
 const RegForm = () => {
+  const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -41,7 +42,14 @@ const RegForm = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     const { username, password, passwordConfirm } = form;
+    if ([username, password, passwordConfirm].includes("")) {
+      setError("모두 입력해주세요");
+      return;
+    }
     if (password !== passwordConfirm) {
+      setError("비밀번호가 일치하지 않습니다.");
+      dispatch(changeFiled({ form: "reg", key: "password", value: "" }));
+      dispatch(changeFiled({ form: "reg", key: "passwordConfirm", value: "" }));
       return;
     }
     dispatch(reg({ username, password }));
@@ -53,8 +61,11 @@ const RegForm = () => {
 
   useEffect(() => {
     if (authError) {
-      console.log("오류");
-      console.log(authError);
+      if (authError.response.status === 409) {
+        setError("이미 존재하는 계정명입니다.");
+        return;
+      }
+      setError("회원가입 실패");
       return;
     }
     if (auth) {
@@ -72,7 +83,7 @@ const RegForm = () => {
     }
   }, [navigate, user]);
 
-  return <AuthForm type="reg" form={form} onChange={onChange} onSubmit={onSubmit} />;
+  return <AuthForm type="reg" form={form} onChange={onChange} onSubmit={onSubmit} error={error} />;
 };
 
 export default RegForm;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -7,6 +7,7 @@ import AuthForm from "components/auth/AuthForm";
 import { check } from "modules/user";
 
 const LoginForm = () => {
+  const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -47,6 +48,7 @@ const LoginForm = () => {
     if (authError) {
       console.log("오류");
       console.log(authError);
+      setError("로그인 실패");
       return;
     }
     if (auth) {
@@ -62,7 +64,7 @@ const LoginForm = () => {
     }
   }, [navigate, user]);
 
-  return <AuthForm type="login" form={form} onChange={onChange} onSubmit={onSubmit} />;
+  return <AuthForm type="login" form={form} onChange={onChange} onSubmit={onSubmit} error={error} />;
 };
 
 export default LoginForm;
