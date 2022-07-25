@@ -25,6 +25,7 @@
     - auth : 로그인 페이지 데이터
     - common : Reuse Components 데이터
   - lib
+    - api : backend api (axios)
     - styles : CSS Color palette
   - pages : react router page
   - modules : redux
