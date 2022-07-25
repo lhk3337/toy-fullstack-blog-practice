@@ -4,13 +4,16 @@ import { takeLatest } from "redux-saga/effects";
 import createRequestSaga, { createRequestActionTypes } from "lib/createRequestSaga";
 import * as authAPI from "lib/api/auth";
 
+// =============================== Action Types =================================================
 const CHANGE_FIELD = "auth/CHANGE_FIELD";
 const INITIALIZE_FORM = "auth/INITIALIZE_FORM";
 
 const [REG, REG_SUCCESS, REG_FAILURE] = createRequestActionTypes("auth/REG");
-
 const [LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE] = createRequestActionTypes("auth/LOGIN");
 
+// =============================== Action Types =================================================
+
+// =============================== Action Function ==============================================
 export const changeFiled = createAction(CHANGE_FIELD, ({ form, key, value }) => ({
   form,
   key,
@@ -20,7 +23,9 @@ export const changeFiled = createAction(CHANGE_FIELD, ({ form, key, value }) => 
 export const initializeForm = createAction(INITIALIZE_FORM, (form) => form);
 export const reg = createAction(REG, ({ username, password }) => ({ username, password }));
 export const login = createAction(LOGIN, ({ username, password }) => ({ username, password }));
+// =============================== Action Function ==============================================
 
+// ================================== Redux Saga ================================================
 const regSaga = createRequestSaga(REG, authAPI.reg);
 const loginSaga = createRequestSaga(LOGIN, authAPI.login);
 
@@ -29,6 +34,7 @@ export function* authSaga() {
   // takeLatest : 액션이 dispatch될때  이전에 실행 중이던 작업이 있다면 취소 처리하고 가장 마지막으로 실행된 작업만 수행한다.
   yield takeLatest(LOGIN, loginSaga);
 }
+// ================================== Redux Saga ================================================
 
 const initialState = {
   reg: {
