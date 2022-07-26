@@ -16,8 +16,16 @@ export const check = createAction(CHECK);
 
 // ================================== Redux Saga =====================================
 const checkSaga = createRequestSaga(CHECK, authAPI.check);
+function checkFailureSaga() {
+  try {
+    localStorage.removeItem("user");
+  } catch (e) {
+    console.log(e);
+  }
+}
 export function* userSaga() {
   yield takeLatest(CHECK, checkSaga);
+  yield takeLatest(CHECK_FAILURE, checkFailureSaga);
 }
 // ================================== Redux Saga =====================================
 

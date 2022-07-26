@@ -29,15 +29,28 @@ const Wrapper = styled(Responsive)`
 const Spacer = styled.div`
   height: 4rem;
 `;
-const Header = () => {
+
+const UserInfo = styled.div`
+  font-weight: bold;
+  margin-right: 1rem;
+`;
+
+const Header = ({ user }) => {
   return (
     <>
       <StyledHeader>
         <Wrapper>
           <div className="logo">REACTERS</div>
-          <div className="right">
-            <Button to="/login">로그인</Button>
-          </div>
+          {user ? (
+            <div className="right">
+              <UserInfo>{user.username}</UserInfo>
+              <Button>로그아웃</Button>
+            </div>
+          ) : (
+            <div className="right">
+              <Button to="/login">로그인</Button>
+            </div>
+          )}
         </Wrapper>
       </StyledHeader>
       <Spacer />

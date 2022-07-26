@@ -78,8 +78,13 @@ const RegForm = () => {
   useEffect(() => {
     if (user) {
       navigate("/");
-      console.log("check API 성공");
-      console.log(user);
+      try {
+        console.log("check API 성공");
+        console.log(user);
+        localStorage.setItem("user", JSON.stringify(user));
+      } catch (e) {
+        console.log(e);
+      }
     }
   }, [navigate, user]);
 
