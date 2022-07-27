@@ -2,10 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import Button from "./Button";
 import Responsive from "./Responsive";
-
+import { palette } from "lib/styles/palette";
+const {
+  sizes: { full },
+} = palette;
 const StyledHeader = styled.div`
   position: fixed;
-  width: 100%;
+  width: ${full};
   background: white;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
 `;

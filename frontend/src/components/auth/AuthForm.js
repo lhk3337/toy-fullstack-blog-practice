@@ -3,13 +3,17 @@ import styled from "styled-components";
 import { palette } from "lib/styles/palette";
 import { Link } from "react-router-dom";
 import Button from "components/common/Button";
+const {
+  colors: { gray },
+  sizes: { full },
+} = palette;
 
 const StyledAuthForm = styled.div`
   h3 {
     font-size: 1.2rem;
     font-weight: bold;
     margin: 0;
-    color: ${palette.gray["800"]};
+    color: ${gray["800"]};
     margin-bottom: 1rem;
   }
 `;
@@ -17,13 +21,13 @@ const StyledAuthForm = styled.div`
 const StyledInput = styled.input`
   font-size: 1rem;
   border: none;
-  border-bottom: 1px solid ${palette.gray["500"]};
+  border-bottom: 1px solid ${gray["500"]};
   padding-bottom: 0.5rem;
   outline: none;
-  width: 100%;
+  width: ${full};
   &:focus {
     color: $oc-teal-7;
-    border-bottom: 1px solid ${palette.gray["700"]};
+    border-bottom: 1px solid ${gray["700"]};
   }
   & + & {
     margin-top: 1rem;
@@ -34,10 +38,10 @@ const Footer = styled.div`
   margin-top: 2rem;
   text-align: right;
   a {
-    color: ${palette.gray[6]};
+    color: ${gray["600"]};
     text-decoration: underline;
     &:hover {
-      color: ${palette.gray[9]};
+      color: ${gray["900"]};
     }
   }
 `;

@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-
+import { palette } from "lib/styles/palette";
+const {
+  sizes: { full },
+} = palette;
 const StyledResponsive = styled.div`
   padding-left: 1rem;
   padding-right: 1rem;
@@ -10,7 +13,7 @@ const StyledResponsive = styled.div`
     width: 768px;
   }
   @media (max-width: 768px) {
-    width: 100%;
+    width: ${full};
   }
 `;
 

@@ -3,7 +3,10 @@ import styled, { css } from "styled-components";
 import { palette } from "lib/styles/palette";
 import { Link } from "react-router-dom";
 
-const { white, gray } = palette;
+const {
+  colors: { white, gray, cyan },
+  sizes: { full },
+} = palette;
 
 const buttonStyle = css`
   border: none;
@@ -24,16 +27,16 @@ const buttonStyle = css`
     css`
       padding-top: 0.75rem;
       padding-bottom: 0.75rem;
-      width: 100%;
+      width: ${full};
       font-size: 1.125rem;
     `}
 
   ${(props) =>
     props.cyan &&
     css`
-      background: ${palette.cyan["500"]};
+      background: ${cyan["500"]};
       &:hover {
-        background: ${palette.cyan["400"]};
+        background: ${cyan["400"]};
       }
     `}
 `;
