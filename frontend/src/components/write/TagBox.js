@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import { palette } from "lib/styles/palette";
 
@@ -67,17 +67,28 @@ const StyledTagList = styled.div`
   margin-top: 0.5rem;
 `;
 
-const TagItem = React.memo(({ tag }) => <Tag>#{tag}</Tag>);
+const TagItem = React.memo(({ tag, onRemove }) => <Tag onClick={() => onRemove(tag)}>#{tag}</Tag>);
 
-const TagList = React.memo(({ tags }) => (
+const TagList = React.memo(({ tags, onRemove }) => (
   <StyledTagList>
     {tags.map((tag) => (
-      <TagItem key={tag} tag={tag} />
+      <TagItem key={tag} tag={tag} onRemove={onRemove} />
     ))}
   </StyledTagList>
 ));
 
 const TagBox = () => {
+  const [input, setInput] = useState("");
+  const [localTags, setLocalTags] = useState([]);
+
+  const insertTag = useCallback(() => {}, []);
+
+  const onRemove = useCallback(() => {}, []);
+
+  const onChange = useCallback(() => {}, []);
+
+  const onSubmit = useCallback(() => {}, []);
+
   return (
     <StyledTagBox>
       <h4>태그</h4>
