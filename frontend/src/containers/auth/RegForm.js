@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { changeFiled, initializeForm, reg } from "modules/auth"; //action function
+import { changeField, initializeForm, reg } from "modules/auth"; //action function
 import AuthForm from "components/auth/AuthForm";
 import { check } from "modules/user";
 
@@ -36,7 +36,7 @@ const RegForm = () => {
 
   const onChange = (e) => {
     const { name, value } = e.target;
-    dispatch(changeFiled({ form: "reg", key: name, value })); // action 함수 실행
+    dispatch(changeField({ form: "reg", key: name, value })); // action 함수 실행
   };
 
   const onSubmit = (e) => {
@@ -48,8 +48,8 @@ const RegForm = () => {
     }
     if (password !== passwordConfirm) {
       setError("비밀번호가 일치하지 않습니다.");
-      dispatch(changeFiled({ form: "reg", key: "password", value: "" }));
-      dispatch(changeFiled({ form: "reg", key: "passwordConfirm", value: "" }));
+      dispatch(changeField({ form: "reg", key: "password", value: "" }));
+      dispatch(changeField({ form: "reg", key: "passwordConfirm", value: "" }));
       return;
     }
     dispatch(reg({ username, password }));

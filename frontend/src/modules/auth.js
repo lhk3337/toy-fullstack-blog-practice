@@ -14,7 +14,7 @@ const [LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE] = createRequestActionTypes("auth/LOG
 // =============================== Action Types =================================================
 
 // =============================== Action Function ==============================================
-export const changeFiled = createAction(CHANGE_FIELD, ({ form, key, value }) => ({
+export const changeField = createAction(CHANGE_FIELD, ({ form, key, value }) => ({
   form,
   key,
   value,

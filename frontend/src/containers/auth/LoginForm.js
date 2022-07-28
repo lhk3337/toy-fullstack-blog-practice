@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { changeFiled, initializeForm, login } from "modules/auth"; //action function
+import { changeField, initializeForm, login } from "modules/auth"; //action function
 import AuthForm from "components/auth/AuthForm";
 import { check } from "modules/user";
 
@@ -31,7 +31,7 @@ const LoginForm = () => {
 
   const onChange = (e) => {
     const { name, value } = e.target;
-    dispatch(changeFiled({ form: "login", key: name, value })); // action 함수 실행
+    dispatch(changeField({ form: "login", key: name, value })); // action 함수 실행
   };
 
   const onSubmit = (e) => {
