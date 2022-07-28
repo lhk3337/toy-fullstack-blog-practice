@@ -67,36 +67,67 @@ const StyledTagList = styled.div`
   margin-top: 0.5rem;
 `;
 
-const TagItem = React.memo(({ tag, onRemove }) => <Tag onClick={() => onRemove(tag)}>#{tag}</Tag>);
+const TagItem = React.memo(({ tag, onRemove }) => {
+  return <Tag onClick={() => onRemove(tag)}>#{tag}</Tag>;
+});
 
-const TagList = React.memo(({ tags, onRemove }) => (
-  <StyledTagList>
-    {tags.map((tag) => (
-      <TagItem key={tag} tag={tag} onRemove={onRemove} />
-    ))}
-  </StyledTagList>
-));
+const TagList = React.memo(({ tags, onRemove }) => {
+  return (
+    <StyledTagList>
+      {tags.map((tag) => (
+        <TagItem key={tag} tag={tag} onRemove={onRemove} />
+      ))}
+    </StyledTagList>
+  );
+});
 
 const TagBox = () => {
   const [input, setInput] = useState("");
   const [localTags, setLocalTags] = useState([]);
 
-  const insertTag = useCallback(() => {}, []);
+  const insertTag = useCallback(
+    (tag) => {
+      if (!tag) {
+        alert("내용을 입력하세요");
+        return;
+      }
+      if (localTags.includes(tag)) {
+        alert("다른 태그를 입력하세요");
+        return;
+      }
+      setLocalTags([...localTags, tag]);
+    },
+    [localTags]
+  );
 
-  const onRemove = useCallback(() => {}, []);
+  const onRemove = useCallback(
+    (listTag) => {
+      setLocalTags(localTags.filter((localTag) => localTag !== listTag));
+    },
+    [localTags]
+  );
 
-  const onChange = useCallback(() => {}, []);
+  const onChange = useCallback((e) => {
+    setInput(e.target.value);
+  }, []);
 
-  const onSubmit = useCallback(() => {}, []);
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      insertTag(input);
+      setInput("");
+    },
+    [input, insertTag]
+  );
 
   return (
     <StyledTagBox>
       <h4>태그</h4>
-      <TagForm>
-        <input placeholder="태그를 입력하세요" />
+      <TagForm onSubmit={onSubmit}>
+        <input placeholder="태그를 입력하세요" value={input} onChange={onChange} />
         <button type="submit">추가</button>
       </TagForm>
-      <TagList tags={["태그1", "태그2", "태그3"]} />
+      <TagList tags={localTags} onRemove={onRemove} />
     </StyledTagBox>
   );
 };
