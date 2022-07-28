@@ -41,3 +41,30 @@ App -> Router -> Page -> Container -> components
 ### Front End
 
 API -> Redux Saga -> React Redux -> Container
+
+## Redux Data Type
+
+### - auth Reducer
+
+- reg : {username: `String`, password: `String`, passwordConfirm: `String`}
+- login : {username: `String`, password: `String`}
+- auth : {\_id: `String`, username: `String`}
+- authError : `null`
+
+### - loading Reducer
+
+- auth/LOGIN: `Boolean`
+- auth/CHECK: `Boolean`
+
+### - user Reducer
+
+- user: {\_id: `String`, username: `String`}
+- checkError: `null`
+
+### - write Reducer
+
+- title: `String`
+- body: `String`
+- tags: `[ ]`
+
+<img width="494" alt="스크린샷 2022-07-28 오후 6 27 13" src="https://user-images.githubusercontent.com/44824320/181472280-01fab50f-3bf9-4452-9144-075f7e3c82c7.png">
