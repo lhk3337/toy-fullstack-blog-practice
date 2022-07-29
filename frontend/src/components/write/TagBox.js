@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { palette } from "lib/styles/palette";
 
@@ -81,30 +81,34 @@ const TagList = React.memo(({ tags, onRemove }) => {
   );
 });
 
-const TagBox = () => {
+const TagBox = ({ tags, onChangeTags }) => {
   const [input, setInput] = useState("");
   const [localTags, setLocalTags] = useState([]);
 
   const insertTag = useCallback(
     (tag) => {
       if (!tag) {
-        alert("내용을 입력하세요");
+        alert("태그를 입력하세요");
         return;
       }
       if (localTags.includes(tag)) {
         alert("다른 태그를 입력하세요");
         return;
       }
-      setLocalTags([...localTags, tag]);
+      const nextTags = [...localTags, tag];
+      setLocalTags(nextTags);
+      onChangeTags(nextTags);
     },
-    [localTags]
+    [localTags, onChangeTags]
   );
 
   const onRemove = useCallback(
     (listTag) => {
-      setLocalTags(localTags.filter((localTag) => localTag !== listTag));
+      const nextTags = localTags.filter((localTag) => localTag !== listTag);
+      setLocalTags(nextTags);
+      onChangeTags(nextTags);
     },
-    [localTags]
+    [localTags, onChangeTags]
   );
 
   const onChange = useCallback((e) => {
@@ -119,7 +123,9 @@ const TagBox = () => {
     },
     [input, insertTag]
   );
-
+  useEffect(() => {
+    setLocalTags(tags);
+  }, [tags]);
   return (
     <StyledTagBox>
       <h4>태그</h4>
