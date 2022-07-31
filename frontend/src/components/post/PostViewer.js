@@ -16,6 +16,7 @@ const PostHead = styled.div`
   margin-bottom: 3rem;
   h1 {
     font-size: 3rem;
+    font-weight: bold;
     line-height: 1.5;
     margin: 0;
   }
@@ -24,6 +25,9 @@ const PostHead = styled.div`
 const SubInfo = styled.div`
   margin-top: 1rem;
   color: ${gray["600"]};
+  b {
+    font-weight: bold;
+  }
   span + span:before {
     color: ${gray["500"]};
     padding-left: 0.25rem;
@@ -46,8 +50,11 @@ const Tags = styled.div`
 `;
 
 const PostContent = styled.div`
-  font-size: 1.3125rem;
+  font-size: 5rem;
   color: ${gray["800"]};
+  b {
+    font-weight: bold;
+  }
 `;
 const PostViewer = () => {
   return (
@@ -66,7 +73,7 @@ const PostViewer = () => {
           <div className="tag">태그3</div>
         </Tags>
       </PostHead>
-      <PostContent dangerouslySetInnerHTML={{ __html: "<p><b>내용</b>입니다</p>" }} />
+      <PostContent dangerouslySetInnerHTML={{ __html: "<p>HTML <b>내용</b>입니다.</p>" }} />
     </StyledPostViewer>
   );
 };
