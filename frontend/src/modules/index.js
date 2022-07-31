@@ -4,16 +4,18 @@ import auth, { authSaga } from "./auth";
 import loading from "./loading";
 import user, { userSaga } from "./user";
 import write, { writeSaga } from "./write";
+import post, { postSaga } from "./post";
 
 const rootReducer = combineReducers({
   auth,
   loading,
   user,
   write,
+  post,
 });
 
 export function* rootSaga() {
-  yield all([authSaga(), userSaga(), writeSaga()]); //  all : 배열안의 여러 사가를 동시에 실행
+  yield all([authSaga(), userSaga(), writeSaga(), postSaga()]); //  all : 배열안의 여러 사가를 동시에 실행
 }
 
 export default rootReducer;
