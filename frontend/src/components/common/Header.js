@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import Button from "./Button";
 import Responsive from "./Responsive";
 import { palette } from "lib/styles/palette";
@@ -43,7 +44,9 @@ const Header = ({ user, onLogout }) => {
     <>
       <StyledHeader>
         <Wrapper>
-          <div className="logo">REACTERS</div>
+          <div className="logo">
+            <Link to={"/"}>REACTERS</Link>
+          </div>
           {user ? (
             <div className="right">
               <UserInfo>{user.username}</UserInfo>
