@@ -5,6 +5,7 @@ import Button from "components/common/Button";
 import { palette } from "lib/styles/palette";
 import SubInfo from "components/common/SubInfo";
 import Tags from "components/common/Tags";
+import { Link } from "react-router-dom";
 
 const {
   colors: { gray },
@@ -17,62 +18,62 @@ const StyledPostList = styled(Responsive)`
 const WritePostButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
 `;
 
-const StyledPostItem = styled.div`
+const StyledPostItem = styled(Link)`
+  width: 100%;
+  display: block;
   cursor: pointer;
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-  &:first-child {
-    padding-top: 0;
-  }
-  & + & {
-    border-top: 1px solid ${gray["200"]};
-  }
+  padding: 2rem;
+  border-radius: 15px;
+  margin-bottom: 3rem;
+  border: 1px solid ${gray["600"]};
   h2 {
     font-size: 2rem;
     font-weight: bold;
-    margin-bottom: 0;
+    margin-bottom: 0.6rem;
     margin-top: 0;
-    &:hover {
-      color: ${gray["600"]};
-    }
   }
   p {
     margin-top: 2rem;
   }
 `;
 
-const PostItem = () => {
+const PostItem = ({ post }) => {
+  const { publishedDate, user, tags, title, body, _id } = post;
+
   return (
-    <StyledPostItem>
-      <h2>제목</h2>
-      <SubInfo username="username" publishedDate={new Date()} />
-      <Tags tags={["태그1", "태그2", "태그3"]}>
-        <div className="tag">태그1</div>
-        <div className="tag">태그1</div>
-      </Tags>
-      <p>포스트 일부분</p>
+    <StyledPostItem to={`/@${user.username}/${_id}`}>
+      <h2>{title}</h2>
+      <SubInfo username={user.username} publishedDate={new Date(publishedDate)} />
+      <Tags tags={tags}></Tags>
+      <p>{body}</p>
     </StyledPostItem>
   );
 };
 
-const PostList = () => {
+const PostList = ({ posts, loading, error, showWriteButton }) => {
+  if (error) {
+    return <StyledPostList>에러가 발생했습니다.</StyledPostList>;
+  }
+
   return (
     <StyledPostList>
       <WritePostButtonWrapper>
-        <Button cyan to="/write">
-          새글 작성하기
-        </Button>
+        {showWriteButton && (
+          <Button cyan to="/write">
+            새글 작성하기
+          </Button>
+        )}
       </WritePostButtonWrapper>
-      <div>
-        {Array(3)
-          .fill()
-          .map((_, index) => (
-            <PostItem key={index} />
+      {!loading && posts && (
+        <div>
+          {posts.map((post) => (
+            <PostItem post={post} key={post._id} />
           ))}
-      </div>
+        </div>
+      )}
     </StyledPostList>
   );
 };
