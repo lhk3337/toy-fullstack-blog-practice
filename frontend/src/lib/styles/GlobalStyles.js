@@ -1,17 +1,15 @@
 import { createGlobalStyle } from "styled-components";
-import reset from "styled-reset"; // style-reset 패키지
 import { palette } from "lib/styles/palette";
 const {
   sizes: { full },
 } = palette;
 const GlobalStyles = createGlobalStyle`
-    ${reset}
     a{
         text-decoration: none;
         color: inherit;
     }
     *{
-        box-sizing: border-box;
+        box-sizing: inherit;
     }
     #root {
         min-height: ${full};
