@@ -7,14 +7,14 @@ const {
 } = palette;
 
 const StyledTags = styled.div`
-  margin-top: 0.5rem;
+  margin-top: 2rem;
   .tag {
     display: inline-block;
-    color: ${cyan["700"]};
+    color: ${cyan["800"]};
     text-decoration: none;
     margin-right: 0.5rem;
     &:hover {
-      color: ${cyan["600"]};
+      color: ${cyan["500"]};
     }
   }
 `;

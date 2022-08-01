@@ -18,13 +18,12 @@ const StyledPostList = styled(Responsive)`
 const WritePostButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
 `;
 
-const StyledPostItem = styled(Link)`
+const StyledPostItem = styled.div`
   width: 100%;
   display: block;
-  cursor: pointer;
   padding: 2rem;
   border-radius: 15px;
   margin-bottom: 3rem;
@@ -44,11 +43,13 @@ const PostItem = ({ post }) => {
   const { publishedDate, user, tags, title, body, _id } = post;
 
   return (
-    <StyledPostItem to={`/@${user.username}/${_id}`}>
-      <h2>{title}</h2>
+    <StyledPostItem>
+      <h2>
+        <Link to={`/@${user.username}/${_id}`}>{title}</Link>
+      </h2>
       <SubInfo username={user.username} publishedDate={new Date(publishedDate)} />
-      <Tags tags={tags}></Tags>
       <p>{body}</p>
+      <Tags tags={tags} />
     </StyledPostItem>
   );
 };
