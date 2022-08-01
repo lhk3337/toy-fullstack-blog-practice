@@ -4,9 +4,10 @@ import Responsive from "components/common/Responsive";
 import Button from "components/common/Button";
 import { palette } from "lib/styles/palette";
 import SubInfo from "components/common/SubInfo";
+import Tags from "components/common/Tags";
 
 const {
-  colors: { gray, cyan },
+  colors: { gray },
 } = palette;
 
 const StyledPostList = styled(Responsive)`
@@ -43,28 +44,16 @@ const StyledPostItem = styled.div`
   }
 `;
 
-const Tags = styled.div`
-  margin-top: 0.5rem;
-  .tag {
-    display: inline-block;
-    color: ${cyan["700"]};
-    text-decoration: none;
-    margin-right: 0.5rem;
-    &:hover {
-      color: ${cyan["600"]};
-    }
-  }
-`;
-
 const PostItem = () => {
   return (
     <StyledPostItem>
       <h2>제목</h2>
       <SubInfo username="username" publishedDate={new Date()} />
-      <Tags>
+      <Tags tags={["태그1", "태그2", "태그3"]}>
         <div className="tag">태그1</div>
         <div className="tag">태그1</div>
       </Tags>
+      <p>포스트 일부분</p>
     </StyledPostItem>
   );
 };
@@ -78,9 +67,11 @@ const PostList = () => {
         </Button>
       </WritePostButtonWrapper>
       <div>
-        <PostItem />
-        <PostItem />
-        <PostItem />
+        {Array(3)
+          .fill()
+          .map((_, index) => (
+            <PostItem key={index} />
+          ))}
       </div>
     </StyledPostList>
   );

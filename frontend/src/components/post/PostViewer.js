@@ -58,13 +58,7 @@ const PostViewer = ({ post, loading, error }) => {
       <PostHead>
         <h1>{title}</h1>
         <SubInfo username={user.username} publishedDate={publishedDate} hasMarginTop />
-        <Tags>
-          {tags.map((tag, index) => (
-            <div className="tag" key={index}>
-              #{tag}
-            </div>
-          ))}
-        </Tags>
+        <Tags tags={tags} />
       </PostHead>
       <PostContent dangerouslySetInnerHTML={{ __html: body }} />
     </StyledPostViewer>
