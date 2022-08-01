@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import Quill from "quill";
-import styled from "styled-components";
 import "quill/dist/quill.bubble.css";
+import styled from "styled-components";
 import { palette } from "lib/styles/palette";
 import Responsive from "components/common/Responsive";
 const {
@@ -33,12 +33,6 @@ const QuillWrapper = styled.div`
     min-height: 320px;
     font-size: 1.125rem;
     line-height: 1.5;
-  }
-  .ql-editor strong {
-    font-weight: bold;
-  }
-  .ql-editor em {
-    font-style: italic;
   }
   .ql-editor.ql-blank::before {
     left: 0px;
