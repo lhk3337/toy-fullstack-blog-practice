@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { palette } from "lib/styles/palette";
 import Responsive from "components/common/Responsive";
 import SubInfo from "components/common/SubInfo";
+import Tags from "components/common/Tags";
+
 const {
   colors: { gray, cyan },
 } = palette;
@@ -12,8 +14,8 @@ const StyledPostViewer = styled(Responsive)`
 
 const PostHead = styled.div`
   border-bottom: 1px solid ${gray["200"]};
-  padding-bottom: 3rem;
-  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
   h1 {
     font-size: 3rem;
     font-weight: bold;
@@ -22,25 +24,9 @@ const PostHead = styled.div`
   }
 `;
 
-const Tags = styled.div`
-  margin-top: 0.5rem;
-  .tag {
-    display: inline-block;
-    color: ${cyan["700"]};
-    text-decoration: none;
-    margin-right: 0.5rem;
-    &:hover {
-      color: ${cyan["600"]};
-    }
-  }
-`;
-
 const PostContent = styled.div`
-  font-size: 5rem;
+  font-size: 1.3125rem;
   color: ${gray["800"]};
-  b {
-    font-weight: bold;
-  }
 `;
 const PostViewer = ({ post, loading, error }) => {
   if (error) {
