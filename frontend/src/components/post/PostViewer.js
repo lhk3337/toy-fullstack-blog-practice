@@ -4,7 +4,6 @@ import { palette } from "lib/styles/palette";
 import Responsive from "components/common/Responsive";
 const {
   colors: { gray, cyan },
-  sizes: { full },
 } = palette;
 const StyledPostViewer = styled(Responsive)`
   margin-top: 4rem;
@@ -56,24 +55,36 @@ const PostContent = styled.div`
     font-weight: bold;
   }
 `;
-const PostViewer = () => {
+const PostViewer = ({ post, loading, error }) => {
+  if (error) {
+    if (error.response && error.response.status === 404) {
+      return <StyledPostViewer>존재하지 않는 포스트입니다.</StyledPostViewer>;
+    }
+  }
+  if (loading || !post) {
+    return null;
+  }
+  const { title, body, user, publishedDate, tags } = post;
+
   return (
     <StyledPostViewer>
       <PostHead>
-        <h1>제목</h1>
+        <h1>{title}</h1>
         <SubInfo>
           <span>
-            <b>testes</b>
+            <b>{user.username}</b>
           </span>
-          <span>{new Date().toLocaleDateString()}</span>
+          <span>{new Date(publishedDate).toLocaleDateString()}</span>
         </SubInfo>
         <Tags>
-          <div className="tag">태그1</div>
-          <div className="tag">태그</div>
-          <div className="tag">태그3</div>
+          {tags.map((tag, index) => (
+            <div className="tag" key={index}>
+              #{tag}
+            </div>
+          ))}
         </Tags>
       </PostHead>
-      <PostContent dangerouslySetInnerHTML={{ __html: "<p>HTML <b>내용</b>입니다.</p>" }} />
+      <PostContent dangerouslySetInnerHTML={{ __html: body }} />
     </StyledPostViewer>
   );
 };
