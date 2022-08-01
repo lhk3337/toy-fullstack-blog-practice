@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Responsive from "components/common/Responsive";
 import Button from "components/common/Button";
 import { palette } from "lib/styles/palette";
+import SubInfo from "components/common/SubInfo";
 
 const {
   colors: { gray, cyan },
@@ -42,19 +43,6 @@ const StyledPostItem = styled.div`
   }
 `;
 
-const SubInfo = styled.div`
-  color: ${gray["600"]};
-  span + span:before {
-    color: ${gray["400"]};
-    padding-left: 0.25rem;
-    padding-right: 0.25rem;
-    content: "\\B7";
-  }
-  b {
-    font-weight: bold;
-  }
-`;
-
 const Tags = styled.div`
   margin-top: 0.5rem;
   .tag {
@@ -72,12 +60,7 @@ const PostItem = () => {
   return (
     <StyledPostItem>
       <h2>제목</h2>
-      <SubInfo>
-        <span>
-          <b>username</b>
-        </span>
-        <span>{new Date().toLocaleDateString()}</span>
-      </SubInfo>
+      <SubInfo username="username" publishedDate={new Date()} />
       <Tags>
         <div className="tag">태그1</div>
         <div className="tag">태그1</div>

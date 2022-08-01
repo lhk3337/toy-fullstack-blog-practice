@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { palette } from "lib/styles/palette";
 import Responsive from "components/common/Responsive";
+import SubInfo from "components/common/SubInfo";
 const {
   colors: { gray, cyan },
 } = palette;
@@ -18,20 +19,6 @@ const PostHead = styled.div`
     font-weight: bold;
     line-height: 1.5;
     margin: 0;
-  }
-`;
-
-const SubInfo = styled.div`
-  margin-top: 1rem;
-  color: ${gray["600"]};
-  b {
-    font-weight: bold;
-  }
-  span + span:before {
-    color: ${gray["500"]};
-    padding-left: 0.25rem;
-    padding-right: 0.25rem;
-    content: "\\B7";
   }
 `;
 
@@ -70,12 +57,7 @@ const PostViewer = ({ post, loading, error }) => {
     <StyledPostViewer>
       <PostHead>
         <h1>{title}</h1>
-        <SubInfo>
-          <span>
-            <b>{user.username}</b>
-          </span>
-          <span>{new Date(publishedDate).toLocaleDateString()}</span>
-        </SubInfo>
+        <SubInfo username={user.username} publishedDate={publishedDate} hasMarginTop />
         <Tags>
           {tags.map((tag, index) => (
             <div className="tag" key={index}>
