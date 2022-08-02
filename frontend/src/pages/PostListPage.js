@@ -4,10 +4,10 @@ import PostListContainer from "containers/posts/PostListContainer";
 
 const PostListPage = () => {
   return (
-    <div>
+    <>
       <HeaderContainer />
       <PostListContainer />
-    </div>
+    </>
   );
 };
 
