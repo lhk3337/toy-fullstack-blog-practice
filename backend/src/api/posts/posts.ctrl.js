@@ -163,22 +163,31 @@ export const list = async (ctx) => {
       .sort({ _id: -1 }) // 내림차순 정렬 sort(),
       .limit(10) // 개수 제한 limit(갯수)
       .skip((page - 1) * 10) //page 1일때 skip(0), page 2일때 skip(10): 데이터 10까지 생략하고 11부터 출력
+      .lean()
       .exec();
     const postCount = await Post.countDocuments(query).exec();
     ctx.set('Last-Page', Math.ceil(postCount / 10)); // 마지막 페이지 출력
-    ctx.body = posts
-      .map((post) => post.toJSON())
-      .map((post) => ({
-        ...post,
-        body: removeHtmlAndShorten(post.body),
-      }));
+    ctx.body = posts.map((post) => ({
+      ...post,
+      body: removeHtmlAndShorten(post.body),
+    }));
   } catch (e) {
     ctx.throw(500, e);
   }
 };
 
 export const read = async (ctx) => {
-  ctx.body = ctx.state.post;
+  const { id } = ctx.params;
+  try {
+    const post = await Post.findById(id).exec();
+    if (!post) {
+      ctx.status = 404;
+      return;
+    }
+    ctx.body = ctx.state.post;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
 };
 
 export const checkOwnPost = (ctx, next) => {
