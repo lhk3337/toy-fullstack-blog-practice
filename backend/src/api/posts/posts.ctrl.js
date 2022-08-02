@@ -1,8 +1,94 @@
 import Post from '../../models/post.js';
 import mongoose from 'mongoose';
 import Joi from 'joi';
+import sanitizeHtml from 'sanitize-html';
 
 const { ObjectId } = mongoose.Types;
+
+const sanitizeOption = {
+  allowedTags: [
+    'address',
+    'article',
+    'aside',
+    'footer',
+    'header',
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'h6',
+    'hgroup',
+    'main',
+    'nav',
+    'section',
+    'blockquote',
+    'dd',
+    'div',
+    'dl',
+    'dt',
+    'figcaption',
+    'figure',
+    'hr',
+    'li',
+    'main',
+    'ol',
+    'p',
+    'pre',
+    'ul',
+    'a',
+    'abbr',
+    'b',
+    'bdi',
+    'bdo',
+    'br',
+    'cite',
+    'code',
+    'data',
+    'dfn',
+    'em',
+    'i',
+    'kbd',
+    'mark',
+    'q',
+    'rb',
+    'rp',
+    'rt',
+    'rtc',
+    'ruby',
+    's',
+    'samp',
+    'small',
+    'span',
+    'strong',
+    'sub',
+    'sup',
+    'time',
+    'u',
+    'var',
+    'wbr',
+    'caption',
+    'col',
+    'colgroup',
+    'table',
+    'tbody',
+    'td',
+    'tfoot',
+    'th',
+    'thead',
+    'tr',
+  ],
+  disallowedTagsMode: 'discard',
+  allowedAttributes: false, // class형태를 가지고 있는 가운데 정렬이 되지 않고 class가 삭제되어, class형태를 나타내기 위해 false로 설정함.
+
+  selfClosing: ['img', 'br', 'hr', 'area', 'base', 'basefont', 'input', 'link', 'meta'],
+
+  allowedSchemes: ['http', 'https', 'ftp', 'mailto', 'tel'],
+  allowedSchemesByTag: {},
+  allowedSchemesAppliedToAttributes: ['href', 'src', 'cite'],
+  allowProtocolRelative: true,
+  enforceHtmlBoundary: false,
+};
 
 export const getPostByid = async (ctx, next) => {
   const { id } = ctx.params;
@@ -40,7 +126,7 @@ export const write = async (ctx) => {
   const { title, body, tags } = ctx.request.body;
   const post = new Post({
     title,
-    body,
+    body: sanitizeHtml(body, sanitizeOption),
     tags,
     user: ctx.state.user,
   });
@@ -51,6 +137,13 @@ export const write = async (ctx) => {
   } catch (e) {
     ctx.throw(500, e);
   }
+};
+
+const removeHtmlAndShorten = (body) => {
+  const filtered = sanitizeHtml(body, {
+    allowedTags: [],
+  });
+  return filtered.length < 200 ? filtered : `${filtered.slice(0, 200)}...`;
 };
 
 export const list = async (ctx) => {
@@ -77,7 +170,7 @@ export const list = async (ctx) => {
       .map((post) => post.toJSON())
       .map((post) => ({
         ...post,
-        body: post.body.length < 200 ? post.body : `${post.body.slice(0, 200)}...`, // body 글자수 제한
+        body: removeHtmlAndShorten(post.body),
       }));
   } catch (e) {
     ctx.throw(500, e);
@@ -85,17 +178,7 @@ export const list = async (ctx) => {
 };
 
 export const read = async (ctx) => {
-  const { id } = ctx.params;
-  try {
-    const post = await Post.findById(id).exec();
-    if (!post) {
-      ctx.status = 404;
-      return;
-    }
-    ctx.body = ctx.state.post;
-  } catch (e) {
-    ctx.throw(500, e);
-  }
+  ctx.body = ctx.state.post;
 };
 
 export const checkOwnPost = (ctx, next) => {
@@ -120,8 +203,8 @@ export const remove = async (ctx) => {
 export const update = async (ctx) => {
   const { id } = ctx.params;
   const schema = Joi.object().keys({
-    title: Joi.string().required(),
-    body: Joi.string().required(),
+    title: Joi.string(),
+    body: Joi.string(),
     tags: Joi.array().items(Joi.string()),
   });
 
@@ -130,9 +213,13 @@ export const update = async (ctx) => {
   } catch (e) {
     ctx.throw(400, e);
   }
-
+  const nextData = { ...ctx.request.body }; // 객체를 복사하고
+  // body 값이 주어졌으면 HTML 필터링
+  if (nextData.body) {
+    nextData.body = sanitizeHtml(nextData.body, sanitizeOption);
+  }
   try {
-    const post = await Post.findByIdAndUpdate(id, ctx.request.body, {
+    const post = await Post.findByIdAndUpdate(id, nextData, {
       new: true,
     }).exec();
     if (!post) {
