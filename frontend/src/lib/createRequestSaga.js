@@ -67,6 +67,7 @@ export default function createRequestSaga(type, request) {
         // put : 특정 액션을 dispatch함
         type: SUCCESS,
         payload: response.data,
+        meta: response,
       });
     } catch (e) {
       yield put({

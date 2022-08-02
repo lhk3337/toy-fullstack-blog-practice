@@ -39,6 +39,11 @@ const buttonStyle = css`
         background: ${cyan["400"]};
       }
     `}
+&:disabled {
+    background: ${gray["300"]};
+    color: ${gray["500"]};
+    cursor: not-allowed;
+  }
 `;
 
 const StyledBtn = styled.button`
