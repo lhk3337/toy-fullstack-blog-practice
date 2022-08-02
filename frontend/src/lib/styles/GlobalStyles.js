@@ -10,6 +10,8 @@ const GlobalStyles = createGlobalStyle`
     }
     *{
         box-sizing: inherit;
+        margin:0px;
+        padding:0px;
     }
     #root {
         min-height: ${full};
