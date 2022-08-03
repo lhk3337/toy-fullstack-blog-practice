@@ -1,5 +1,5 @@
-import React from "react";
 import "quill/dist/quill.bubble.css";
+import React from "react";
 import styled from "styled-components";
 import { palette } from "lib/styles/palette";
 import Responsive from "components/common/Responsive";
@@ -15,8 +15,8 @@ const StyledPostViewer = styled(Responsive)`
 
 const PostHead = styled.div`
   border-bottom: 1px solid ${gray["200"]};
-  padding-bottom: 2rem;
-  margin-bottom: 2rem;
+  padding-bottom: 3rem;
+  margin-bottom: 3rem;
   h1 {
     font-size: 3rem;
     font-weight: bold;
@@ -28,6 +28,12 @@ const PostHead = styled.div`
 const PostContent = styled.div`
   font-size: 1.3125rem;
   color: ${gray["800"]};
+  blockquote {
+    border-left: 4px solid #ccc;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding-left: 16px;
+  }
   pre.ql-syntax {
     background-color: #23241f;
     color: #f8f8f2;
@@ -76,7 +82,7 @@ const PostContent = styled.div`
     text-indent: 39rem;
   }
 `;
-const PostViewer = ({ post, loading, error }) => {
+const PostViewer = ({ post, loading, error, actionButtons }) => {
   if (error) {
     if (error.response && error.response.status === 404) {
       return <StyledPostViewer>존재하지 않는 포스트입니다.</StyledPostViewer>;
@@ -94,6 +100,7 @@ const PostViewer = ({ post, loading, error }) => {
         <SubInfo username={user.username} publishedDate={publishedDate} hasMarginTop />
         <Tags tags={tags} />
       </PostHead>
+      {actionButtons}
       <PostContent dangerouslySetInnerHTML={{ __html: body }} />
     </StyledPostViewer>
   );
