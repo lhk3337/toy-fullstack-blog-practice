@@ -2,7 +2,7 @@ import React from "react";
 import TagBox from "components/write/TagBox";
 
 import { useDispatch, useSelector } from "react-redux";
-import { changeField, initialize } from "modules/write";
+import { changeField } from "modules/write";
 
 const TagBoxContainer = () => {
   const dispatch = useDispatch();
