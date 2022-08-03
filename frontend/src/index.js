@@ -10,6 +10,8 @@ import createSagaMiddleware from "@redux-saga/core";
 import rootReducer, { rootSaga } from "modules";
 import { tempSetUser, check } from "modules/user";
 
+import { HelmetProvider } from "react-helmet-async";
+
 import App from "App";
 
 const sagaMiddleware = createSagaMiddleware();
@@ -36,7 +38,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,

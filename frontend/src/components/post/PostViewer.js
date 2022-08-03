@@ -5,6 +5,7 @@ import { palette } from "lib/styles/palette";
 import Responsive from "components/common/Responsive";
 import SubInfo from "components/common/SubInfo";
 import Tags from "components/common/Tags";
+import { Helmet } from "react-helmet-async";
 
 const {
   colors: { gray },
@@ -95,6 +96,9 @@ const PostViewer = ({ post, loading, error, actionButtons }) => {
 
   return (
     <StyledPostViewer>
+      <Helmet>
+        <title>{title} - REACTERS</title>
+      </Helmet>
       <PostHead>
         <h1>{title}</h1>
         <SubInfo username={user.username} publishedDate={publishedDate} hasMarginTop />
